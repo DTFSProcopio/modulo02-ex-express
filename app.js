@@ -26,7 +26,12 @@ app.put("/product/:id", (req, res) => {
     return res.status(404).send({ message: "item não encontrado!" });
   }
   const content = req.body;
-  products[id - 1] = { ...content };
+  products = products.map((product) => {
+    if (product.id === id) {
+      return { ...content };
+    }
+    return product;
+  });
   res.send(products);
 });
 app.patch("/product/:id", (req, res) => {
