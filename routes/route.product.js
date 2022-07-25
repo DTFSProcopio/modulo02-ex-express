@@ -2,7 +2,6 @@ const express = require("express");
 const routes = express.Router();
 let products = require("../products");
 
-
 routes.get("/", (_req, res) => {
   res.send(products);
 });
@@ -11,7 +10,7 @@ routes.get("/:id", (req, res) => {
   product = products.find((product) => product.id === id);
   res.send(product);
 });
-routes.post("/create", (req, res) => {
+routes.post("/", (req, res) => {
   const content = req.body;
   if (content.length) {
     content.forEach((product) => products.push(product));
@@ -20,11 +19,11 @@ routes.post("/create", (req, res) => {
   }
   res.send(products);
 });
-routes.put("/update/:id", (req, res) => {
+routes.put("/:id", (req, res) => {
   const id = Number(req.params.id);
   const found = products.find((product) => product.id === id);
   if (!found) {
-    return res.status(404).send({ message: "item não encontrado!" });
+    return res.status(404).send({ message: "Item not found!" });
   }
   const content = req.body;
   products = products.map((product) => {
@@ -35,7 +34,7 @@ routes.put("/update/:id", (req, res) => {
   });
   res.send(products);
 });
-routes.patch("/patch/:id", (req, res) => {
+routes.patch("/:id", (req, res) => {
   const id = Number(req.params.id);
   const found = products.find((product) => product.id === id);
   if (!found) {
